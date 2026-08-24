@@ -103,9 +103,9 @@ python main.py
 
 ## 📊 Sample Output
 
-| Date       | Open | High | Low  | Close | Volume    |
-| ---------- | ---- | ---- | ---- | ----- | --------- |
-| 2024-01-01 | 2450 | 2480 | 2430 | 2470  | 1,250,000 |
+| Date       | Symbol  | Open | High | Low  | Close | Volume    |
+| ---------- | -------- |---- | ---- | ---- | ----- | --------- |
+| 2024-01-01 | Hose:VN30| 2450 |2480 | 2430 | 2470  | 1,250,000 |
 
 Output can be directly used for:
 
