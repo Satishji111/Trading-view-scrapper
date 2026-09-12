@@ -254,7 +254,7 @@ pip install pyinstaller
 ```
 Then build the executable:
 ```text
-pyinstaller --onefile --windowed --clean --add-data "C:\Users\syada11\TradingView\logo.png;." --icon="C:\Users\syada11\TradingView\data_display.ico" "C:\Users\syada11\TradingView\Data_Scraper.py"
+pyinstaller --onefile --windowed --clean --add-data "C:\Users\TradingView\logo.png;." --icon="C:\Users\TradingView\data_display.ico" "C:\Users\TradingView\Data_Scraper.py"
 ```
 The executable will be created inside:
 ```text
