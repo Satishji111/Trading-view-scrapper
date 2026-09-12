@@ -57,11 +57,11 @@ Trading-view-scrapper/
         ├── Failed_Symbols.csv
         └── Scraping_Summary.csv
         
-        
+```    
         
 
 # Installation
-1. Clone the repository
+## 1. Clone the repository
 
 ```text
 git clone https://github.com/Satishji111/Trading-view-scrapper.git
