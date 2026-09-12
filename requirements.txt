@@ -1,0 +1,4 @@
+tk-tools
+pillow
+tradingview-datafeed
+pandas
