@@ -1,156 +1,287 @@
-# 📈 TradingView Scraper (OHLCV Data Extractor)
+# TradingView Data Scraper
 
-A Python-based tool to **extract OHLCV (Open, High, Low, Close, Volume) market data** from TradingView for **any market and timeframe**. This project is designed for traders, analysts, and data scientists who need structured market data for analysis, backtesting, and research.
+A Python-based desktop application that fetches historical market data from TradingView using `tvDatafeed` and saves the results as CSV files.
 
----
+The application provides a simple Tkinter GUI where users can enter multiple ticker symbols, select an exchange and bar interval, specify the number of historical bars, and fetch the data without freezing the interface.
 
-## 📌 Project Overview
+## Features
 
-TradingView provides rich market data but does not allow easy bulk export for free users. This tool bridges that gap by enabling:
+- Fetch historical market data from TradingView
+- Supports multiple ticker symbols in one request
+- Supports multiple time intervals:
+  - 1 Minute
+  - 3 Minutes
+  - 5 Minutes
+  - 15 Minutes
+  - 30 Minutes
+  - 1 Hour
+  - Daily
+- Duplicate ticker removal
+- Automatic ticker and exchange formatting
+- Handles inactive or unavailable symbols without stopping the complete process
+- Retry mechanism for temporary TradingView request failures
+- Background processing using Python threading
+- Progress bar with current ticker and completion percentage
+- Cancel button to stop the process after the current request
+- Failed-symbol report with error details
+- Scraping summary report
+- Separate folders for downloaded data and reports
+- Optional background logo/image for the GUI
+- Can be packaged as a standalone Windows executable using PyInstaller
 
-* Automated OHLCV data extraction
-* Support for multiple exchanges
-* Flexible timeframe selection
-* Clean, analysis-ready output
+## Technologies Used
 
-This repository demonstrates **financial data engineering skills** combined with **Python automation**.
+- Python
+- Tkinter
+- Pandas
+- Pillow
+- tvDatafeed
+- pathlib
+- threading
 
----
+## Project Structure
 
-## 🎯 Key Features
-
-* 📊 Extract OHLCV data (Open, High, Low, Close, Volume)
-* 🌍 Works with **any TradingView-supported market**
-* ⏱️ Multiple timeframes (Intraday / Daily / Weekly / Monthly)
-* 🧹 Clean and structured output (CSV / DataFrame ready)
-* 🔁 Can be integrated into trading strategies & ML pipelines
-
----
-
-## 🗂️ Project Structure
-
-```bash
+```text
 Trading-view-scrapper/
 │
-├── src/
-│   ├── tradingview_scraper.py   # Core scraping & data extraction logic
-│   ├── utils.py                 # Helper functions
-│   └── config.py                # Market, symbol & timeframe configuration
+├── scraper.py
+├── logo.png
 │
-├── output/
-│   └── ohlcv_data.csv            # Extracted OHLCV data
-│
-├── requirements.txt
-├── README.md
-└── main.py                       # Script entry point
-```
+└── Output/
+    ├── Data/
+    │   ├── NSE_RELIANCE_Daybar.csv
+    │   ├── NSE_TCS_Daybar.csv
+    │   └── ...
+    │
+    └── Reports/
+        ├── Failed_Symbols.csv
+        └── Scraping_Summary.csv
+        
+        
+        
 
-*(Structure may vary slightly based on implementation)*
+# Installation
+1. Clone the repository
 
----
-
-## ⚙️ Technologies Used
-
-* **Python** 🐍
-* Pandas
-* Requests / WebSocket / Selenium *(as applicable)*
-* TradingView data source
-
----
-
-## ▶️ How It Works
-
-1. User provides:
-
-   * Market / Exchange
-   * Symbol (e.g. NSE:RELIANCE, NASDAQ:AAPL, BTCUSDT)
-   * Timeframe
-
-2. Script connects to TradingView
-
-3. OHLCV data is fetched programmatically
-
-4. Data is saved in a structured format for analysis
-
----
-
-## ▶️ How to Run the Project
-
-### 1️⃣ Clone the Repository
-
-```bash
+```text
 git clone https://github.com/Satishji111/Trading-view-scrapper.git
 cd Trading-view-scrapper
 ```
 
-### 2️⃣ Install Dependencies
-
-```bash
-pip install -r requirements.txt
+## 2. Create a virtual environment
+```text
+python -m venv venv
 ```
 
-### 3️⃣ Configure Market & Symbol
-
-Update symbol, exchange, and timeframe inside the configuration file or script.
-
-### 4️⃣ Run the Scraper
-
-```bash
-python main.py
+Activate it on Windows:
+```text
+venv\\Scripts\\activate
 ```
+## 3. Install required packages
+```text
+pip install pandas pillow tvdatafeed
+```
+If your tvDatafeed package is installed from a specific fork or source, install the version you normally use for this project.
 
----
+# Running the Application
 
-## 📊 Sample Output
+Run the Python script:
+```text
+pip install pandas pillow tvdatafeed
+```
+The GUI will open.
 
-| Date       | Symbol  | Open | High | Low  | Close | Volume    |
-| ---------- | -------- |---- | ---- | ---- | ----- | --------- |
-| 2024-01-01 | Hose:VN30| 2450 |2480 | 2430 | 2470  | 1,250,000 |
+Enter the required details:
 
-Output can be directly used for:
+# Ticker(s)
 
-* Technical analysis
-* Backtesting strategies
-* Machine learning models
+Multiple tickers can be entered using commas.
 
----
+Example:
+```text
+RELIANCE,HDFCBANK,TCS,INFY
+```
+The application automatically removes extra spaces and duplicate symbols.
 
-## 📌 Use Cases
+# Exchange
 
-* Algorithmic trading research
-* Strategy backtesting
-* Market data collection
-* Quantitative analysis
-* ML-based price prediction
+Enter the exchange code used by TradingView.
 
----
+Examples:
+```text
+NSE
+BSE
+```
+# Bar Type
 
-## ⚠️ Disclaimer
+Select one of the available intervals:
+```text
+1 Minbar
+3 Minbar
+5 Minbar
+15 Minbar
+30 Minbar
+1 Hour
+Daybar
+```
+# Number of Bars
 
-This project is created **strictly for educational and research purposes**. Please ensure compliance with TradingView’s terms of service before using this tool for commercial purposes.
+Enter the number of historical bars required.
 
----
+Example:
+```text
+500
+```
+Then click Fetch Data.
 
-## 🚀 Future Enhancements
+# Output
 
-* Add real-time streaming support
-* Add automatic retries & error handling
-* Support batch symbol extraction
-* Integrate with backtesting frameworks
-* Add Docker support
+Downloaded data is saved inside:
+```text
+Output/Data/
+```
+For example:
+```text
+NSE_RELIANCE_Daybar.csv
+NSE_TCS_Daybar.csv
+```
+For daily data, the datetime values are saved in:
+```text
+YYYY-MM-DD
+```
+For intraday data, the datetime values are saved in:
+```text
+YYYY-MM-DD HH:MM:SS
+```
+# Reports
+## Failed_Symbols.csv
 
----
+If a symbol cannot be downloaded, it is recorded in:
+```text
+Output/Reports/Failed_Symbols.csv
+```
+The report contains:
 
-## 👨‍💻 Author
+1. Symbol
+2. Exchange
+3. Status
+4. Error
 
-**Satish Yadav**
-Senior Data Research Analyst
-📈 Quantitative Analysis | Trading Automation | Python | SQL
+Example:
+```text
+Symbol,Exchange,Status,Error
+ABC,NSE,No Data,No historical data returned
+XYZ,NSE,Error,Failed after 3 attempts: ...
+```
+# Scraping_Summary.csv
 
-🔗 GitHub: [https://github.com/Satishji111](https://github.com/Satishji111)
+A summary of each scraping process is saved in:
+```text
+Output/Reports/Scraping_Summary.csv
+```
+It contains:
 
----
+Total Symbols
+Successful
+Failed
+Exchange
+Number of Bars
+Bar Type
 
-## ⭐ Support
+# Error Handling
 
-If you find this project useful, please **star ⭐ the repository**. It helps others discover the project and supports further development.
+The application is designed so that an individual symbol failure does not stop the entire scraping process.
+
+For each ticker:
+
+The application requests historical data.
+If the request temporarily fails, it retries up to 3 times.
+If no data is returned, the symbol is recorded as failed.
+If an unexpected error occurs, the error is recorded.
+The application continues processing the remaining symbols.
+
+# Cancellation
+
+The Cancel button allows the user to request cancellation while the scraper is running.
+
+The application completes the current network request and then stops processing additional symbols.
+
+# GUI Progress
+
+While the scraper is running, the application displays:
+```text
+Processing: 25/100 (25.0%) | Current: RELIANCE
+```
+This allows the user to monitor the progress of large scraping jobs.
+
+Data Fields
+
+The downloaded CSV files generally contain fields such as:
+```text
+datetime
+symbol
+open
+high
+low
+close
+volume
+```
+The exact fields depend on the data returned by tvDatafeed.
+
+# Important Notes
+
+This project depends on the availability and behavior of TradingView and the tvDatafeed library.
+
+Historical data availability can vary by:
+
+Exchange
+Symbol
+Time interval
+Number of requested bars
+TradingView data availability
+
+An invalid, inactive, or unavailable symbol may return no data.
+
+The project should be used in accordance with TradingView's terms and any applicable data usage restrictions.
+
+# Packaging as Windows EXE
+
+The application can be packaged using PyInstaller.
+
+Install PyInstaller:
+```text
+pip install pyinstaller
+```
+Then build the executable:
+```text
+pyinstaller --onefile --windowed --clean --add-data "C:\Users\syada11\TradingView\logo.png;." --icon="C:\Users\syada11\TradingView\data_display.ico" "C:\Users\syada11\TradingView\Data_Scraper.py"
+```
+The executable will be created inside:
+```text
+dist/
+```
+If the script has a different filename, replace scraper.py in the command.
+
+# Future Improvements
+
+## Possible future enhancements include:
+
+Login/session management
+Configurable retry count
+Detailed application log file
+Custom output directory selection
+Pause and resume functionality
+Download history
+More TradingView intervals
+Automatic data validation
+Excel output option
+Improved GUI design
+Multi-symbol parallel processing
+
+# Author
+
+Satish Yadav
+
+GitHub: https://github.com/Satishji111
+
+Repository: https://github.com/Satishji111/Trading-view-scrapper
